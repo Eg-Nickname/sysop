@@ -1,0 +1,42 @@
+========================================================================
+Autor: Wieslaw Placzek,                               Krakow, 21.02.2025
+========================================================================
+
+* Zawartosc:
+============
+
+Katalog Program2 zawiera prosty program do wyznaczania wartosci liczby pi
+metoda Monte Carlo oraz wyliczania calki z funkcji dwoch zmiennych metoda
+podstawowa Monte Carlo.
+    Program sklada sie z dwoch modulow:    
+    1) mcint.c              - program glowny,
+    2) funkcja.c, funkcja.h - przykladowa funkcja 2-zmiennych. 
+
+------------------------------------------------------------------------
+
+* Jak uruchomic program:
+========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania
+i uruchamiania powyzszych programow, a takze czyszczenia katalogu 
+i jego archiwizacji.
+
+-> Aby uruchomic program, nalezy wykonac (ewentualnie z opcja -r):
+   a) dla biblioteki statycznej (static library; patrz Makefile):
+      make runs
+   b) dla biblioteki dzielonej (shared library; patrz Makefile):
+    1) wersja 1:
+      make rund1
+    2) wersja 2:
+      make rund2
+
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac:
+       make clean
+
+-> W celu archiwizacji oraz kompresji katalogu nalezy wykonac:
+       make tar
+
+========================================================================
+
+
+

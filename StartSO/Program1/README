@@ -1,0 +1,37 @@
+========================================================================
+Autor: Wieslaw Placzek,                               Krakow, 21.02.2025
+========================================================================
+
+* Zawartosc:
+============
+
+Katalog Program1 zawiera prosty program w jezyku C wypisujacy w losowo 
+wybranych miejscach na ekranie tekst powitania.
+    Program sklada sie z jednego modulu: 
+    witaj.c  - program glowny. 
+------------------------------------------------------------------------
+
+* Jak uruchomic program:
+========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania
+i uruchamiania powyzszych programow, a takze czyszczenia katalogu 
+i jego archiwizacji.
+
+-> Aby uruchomic program, nalezy w line polecen powloki wykonac:
+       make run
+
+---> Dla pewnosci, ze wykonywane sa polecenia zdefiniowane w Makefile,
+     a nie wbudowane polecenia make'a, uzyc opcji -r, tzn.
+       make -r run
+
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac:
+       make clean
+
+-> W celu archiwizacji oraz kompresji katalogu nalezy wykonac:
+       make tar
+
+========================================================================
+
+
+

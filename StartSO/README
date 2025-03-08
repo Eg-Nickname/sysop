@@ -1,0 +1,20 @@
+============================================================================
+Autor: Wieslaw Placzek,                                   Krakow, 21.02.2025
+============================================================================
+
+* Zawartosc:
+============
+
+Katalog StartSO zawiera dwa podkatalogi: Program1 i Program2 z prostymi
+przykladowymi programami w jezyku C - szczegoly w plikach README w tych
+podkatalogach.
+
+Ponadto znajduje sie tu prosty plik Makefile zawierajacy polecenie
+programu make do archiwizacji/kompresji calego biezacego katalogu.
+Szczegolowe objasnienia dotyczace programu make znajduja sie w plikach
+Makefile w powyzszych podkatalogach.
+
+-> W celu archiwizacji/kompresji katalogu nalezy z poziomu powloki wykonac:
+   make tar
+
+===========================================================================
