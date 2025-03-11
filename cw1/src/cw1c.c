@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include "process_info.h"
@@ -18,7 +19,7 @@ int main(int argc, char **argv)
             exit(1);
         case 0:
             // Child process code
-            sleep(3);
+            sleep(1);
             printf("    Proces potomny - ");
             print_process_info();
             break;

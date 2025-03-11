@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include "process_info.h"
 
@@ -27,7 +29,7 @@ int main(int argc, char **argv)
             break;
         default:
             // Parent process code
-            wait();
+            wait(NULL);
             break;
         };
     }

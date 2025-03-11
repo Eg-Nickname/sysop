@@ -1,6 +1,11 @@
-#include <stdio.h>
+#define _XOPEN_SOURCE
+#define  _XOPEN_SOURCE_EXTENDED
+
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdio.h>
+
+
 
 void print_process_info()
 {
