@@ -11,7 +11,8 @@ void print_process_info();
 int main(int argc, char **argv)
 {
     if(argc != 2){
-        fprintf(stderr, "Nie podano ścieżki programu do wykonania \n");
+        fprintf(stderr, "Nie podano ścieżki programu do wykonania. Poprawne użycie \n");
+        fprintf(stderr, "%s ./sciezka_do_pliku.x \n", argv[0]);
         exit(1);
     }
 
