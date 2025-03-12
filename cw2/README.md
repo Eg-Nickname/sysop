@@ -20,7 +20,7 @@ Program cw2.x tworzy 3 procesy potomne, które wykonują program podany jako par
 
 # Jak uruchomić program
 
-Programy do odpowiednich podpunktów można uruchomić przy użyciu polecenia
+Program można uruchomić przy użyciu polecenia
 ```bash
 make run # uruchamia program z cw wraz z parametrem, którym jest ścieżka do programu wypisującego informacje o procesie potomnym
 ```
