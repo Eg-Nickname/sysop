@@ -1,0 +1,1 @@
+Przy n-krotnym wywołaniu funkcji fork-exec powstanie n procesów, ponieważ nowy proces w sowim kodzie nie posiada już funkcji fork, ktróa mogła by spowodowac jego rozdzielenie na kolejne, więc jedynie program macierzysty się rozdziela.
