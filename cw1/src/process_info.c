@@ -5,8 +5,6 @@
 #include <unistd.h>
 #include <stdio.h>
 
-
-
 void print_process_info()
 {
     int uid = getuid();
