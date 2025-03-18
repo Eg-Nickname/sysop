@@ -1,3 +1,10 @@
+// ======================================================================================
+// Program tworzy 3 procesy potomne i uruchamia w nich program
+// przekazany przez użytkownika jako parametr przy użyciu funkcji execlp
+// ======================================================================================
+// Jakub Kurek 18-03-2025
+// ======================================================================================
+
 #define _XOPEN_SOURCE
 #define  _XOPEN_SOURCE_EXTENDED
 #include <stdio.h>
@@ -10,6 +17,7 @@ void print_process_info();
 
 int main(int argc, char **argv)
 {
+    // Validate if arg count is correct if not promt user how to execute program corectly
     if(argc != 2){
         fprintf(stderr, "Nie podano ścieżki programu do wykonania. Poprawne użycie \n");
         fprintf(stderr, "%s ./sciezka_do_pliku.x \n", argv[0]);
@@ -19,13 +27,14 @@ int main(int argc, char **argv)
     printf("Proces macierzysty - ");
     print_process_info();
 
+    // Create 3 new processes and execute program passed as argument
     for (int i = 0; i < 3; i++)
     {
         switch (fork())
         {
         case -1:
             // Fork error code
-            perror("fork error");
+            perror("Fork error");
             exit(1);
         case 0:
             // Child process code
