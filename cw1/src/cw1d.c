@@ -1,3 +1,12 @@
+// ======================================================================================
+// Program wypisuje informacje i tworzy procesy potomne oraz wypisuje w nich informacje 
+// w kolejności od najstarszego do najmłodszego pokolenia, które również wypisuja
+// informacje o sobie. Proces macierzysty czeka na procesy potomne przy uzyciu funkcji
+// sleep().
+// ======================================================================================
+// Jakub Kurek 09-03-2025
+// ======================================================================================
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>

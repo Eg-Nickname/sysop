@@ -1,3 +1,10 @@
+// ======================================================================================
+// Program wypisujący informacje o procesie w którym jest on wykonywany 
+// oraz informacje z procesów potomnych utworzonych przy użyciu funkcji fork.
+// ======================================================================================
+// Jakub Kurek 09-03-2025
+// ======================================================================================
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -25,7 +32,10 @@ int main(int argc, char **argv)
             break;
         default:
             // Parent process code
-            wait(NULL);
+            if(wait(NULL)==-1){
+                perror("Wait error");
+                exit(3);
+            }
             break;
         };
     }

@@ -1,3 +1,10 @@
+// ======================================================================================
+// Proces tworzy nowe procesy potomne oraz zmienia ich na liderów własnych grup oraz
+// wypisuje informacje o processach
+// ======================================================================================
+// Jakub Kurek 09-03-2025
+// ======================================================================================
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -29,7 +36,10 @@ int main(int argc, char **argv)
             break;
         default:
             // Parent process code
-            wait(NULL);
+            if(wait(NULL)==-1){
+                perror("Wait error");
+                exit(3);
+            }
             break;
         };
     }

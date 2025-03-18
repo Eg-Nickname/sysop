@@ -1,3 +1,9 @@
+// ======================================================================================
+// Program wypisuje informacje o sobie oraz tworzy nowe procesy a następnie je osieraca
+// by uzyskać informacje o procesie przejmującym osierocone procesy
+// ======================================================================================
+// Jakub Kurek 09-03-2025
+// ======================================================================================
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
