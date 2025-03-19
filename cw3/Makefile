@@ -69,8 +69,8 @@ runa: $(EXEA)
 	$(EXEA) $(SIG) $(SIG_HANDLING)
 # Run exectuable for program B
 .PHONY: runb
-runb: $(EXEB)
-	$(EXEB)
+runb: $(EXEA) $(EXEB)
+	$(EXEB) $(EXEA) $(SIG) $(SIG_HANDLING)
 # Run exectuable for program C
 .PHONY: runc
 runc: $(EXEC)
