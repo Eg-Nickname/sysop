@@ -33,18 +33,19 @@ int main(int argc, char** argv){
     // Parse signal from programs arguments
     if(sscanf(argv[1], "%d", &sig) != 1){
         fprintf(stderr, "Invalid signal number argument.\n");
+        exit(1);
     }
     // Parse and validate signal handle type from program arguments
     if((sscanf(argv[2], "%d", &sig_handle_type) != 1) || (sig_handle_type > SIG_CUSTOM_HANLDER)){
         fprintf(stderr, "Invalid signal operaton type argument. \n");
+        exit(1);
     }
+    // Print pid of process handling singal
+    printf("Pid for process capturing signal: %d \n", getpid());
     // Set handlig of signal
     set_signal_handling(sig, sig_handle_type);
-    for(int i=0;i<5;i++){
-        printf("Waiting for next signal\n");
-        fflush(stdout);
-        pause();
-    }
+    // Wait for incoming signal
+    pause();
 
     return 0;
 }
@@ -70,7 +71,7 @@ void set_signal_handling(int sig, int sig_handle_type){
 }
 
 void custom_signal_handler(int sig){
-    printf("    Custom handling of singal %s \n", strsignal(sig));
+    printf("    Custom handling of singal \"%s\" with id \"%d\"`\n", strsignal(sig), sig);
     fflush(stdout);
 
     if (signal(sig, &custom_signal_handler) == SIG_ERR){
@@ -78,14 +79,3 @@ void custom_signal_handler(int sig){
         exit(EXIT_FAILURE);
     }
 }
-
-// Napisać program do obslugi sygnałów z możliwościami: (1) wykonania operacji domy-
-// ślnej, (2) ignorowania oraz (3) przechwycenia i własnej obslugi sygnalu. Do ocze-
-// kiwania na sygnał użyć funkcji pause. Uruchamiać program i wysyłać do niego
-// sygnaly przy pomocy sekwencji klawiszy oraz przy pomocy polecenia kill z poziomu
-// powłoki.
-
-// Numer sygnalu oraz opcj ,e jego obslugi we wszystkich powy˙zszych programach przeka-
-// zywa´c za pomoc ,a argument´ow wywolania programu – sprawdza´c ich liczb ,e i wypisywa´c
-// odpowiedni komunikat w przypadku bl ,ednego uruchomienia (ze wskaz´owk ,a jak poprawnie
-// uruchomi´c program).

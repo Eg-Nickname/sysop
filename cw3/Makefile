@@ -62,9 +62,11 @@ $(EXEC): $(OBJC) $(OBJ_SHARED_LIB)
 	$(LD) -o $@ $(LFLAGS) $^
 
 # Run exectuable for program A
+SIG ?= 2
+SIG_HANDLING ?= 2
 .PHONY: runa
 runa: $(EXEA)
-	$(EXEA)
+	$(EXEA) $(SIG) $(SIG_HANDLING)
 # Run exectuable for program B
 .PHONY: runb
 runb: $(EXEB)
