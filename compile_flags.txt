@@ -1,0 +1,5 @@
+-Wall
+-std=c99
+-pedantic
+-Wextra
+-Wswitch
