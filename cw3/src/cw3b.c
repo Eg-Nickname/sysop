@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
     case 0:
         // Child process code
         execl(child_proc_prog, child_proc_prog, argv[2], argv[3], NULL);
-        perror("Execlp error");
+        perror("Execl error");
         _exit(2);
         break;
     default:
