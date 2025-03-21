@@ -15,19 +15,22 @@ SRC_DIR = ./src
 # Names for object and exe files for programs
 PROGA = cw3a
 PROGB = cw3b
-PROGC = cw3c
+PROGC_MASTER = cw3c_master
+PROGC_SPAWNER = cw3c_spawner
 SHARED_LIB = 
 # Executables objects path
 OBJA = $(OBJ_DIR)/$(PROGA).o
 OBJB = $(OBJ_DIR)/$(PROGB).o
-OBJC = $(OBJ_DIR)/$(PROGC).o
+OBJC_MASTER = $(OBJ_DIR)/$(PROGC_MASTER).o
+OBJC_SPAWNER = $(OBJ_DIR)/$(PROGC_SPAWNER).o
 # Shared behaviour object file
 OBJ_SHARED_LIB =
 # Executables path
 EXEA = $(EXE_DIR)/$(PROGA).x
 EXEB = $(EXE_DIR)/$(PROGB).x
-EXEC = $(EXE_DIR)/$(PROGC).x
-EXES = $(EXEA) $(EXEB) $(EXEC)
+EXEC_MASTER = $(EXE_DIR)/$(PROGC_MASTER).x
+EXEC_SPAWNER = $(EXE_DIR)/$(PROGC_SPAWNER).x
+EXES = $(EXEA) $(EXEB) $(EXEC_MASTER) $(EXEC_SPAWNER)
 
 # Compilator flags
 CFLAGS = -Wall -std=c99 -pedantic -O -fPIC
@@ -58,7 +61,10 @@ $(EXEA): $(OBJA) $(OBJ_SHARED_LIB)
 $(EXEB): $(OBJB) $(OBJ_SHARED_LIB) 
 	$(LD) -o $@ $(LFLAGS) $^
 
-$(EXEC): $(OBJC) $(OBJ_SHARED_LIB) 
+$(EXEC_MASTER): $(OBJC_MASTER) $(OBJ_SHARED_LIB) 
+	$(LD) -o $@ $(LFLAGS) $^
+
+$(EXEC_SPAWNER): $(OBJC_SPAWNER) $(OBJ_SHARED_LIB) 
 	$(LD) -o $@ $(LFLAGS) $^
 
 # Run exectuable for program A
@@ -72,9 +78,10 @@ runa: $(EXEA)
 runb: $(EXEA) $(EXEB)
 	$(EXEB) $(EXEA) $(SIG) $(SIG_HANDLING)
 # Run exectuable for program C
+SPAWNER_PROG ?= EXEC_SPAWNER
 .PHONY: runc
-runc: $(EXEC)
-	$(EXEC)
+runc: $(EXEC_MASTER) $(EXEC_SPAWNER) $(EXEA)
+	$(EXEC_MASTER) $(EXEC_SPAWNER) $(EXEA) $(SIG) $(SIG_HANDLING)
 
 .PHONY: clean tar
 # File cleanup before archiving and compressing
