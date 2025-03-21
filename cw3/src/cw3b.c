@@ -2,6 +2,7 @@
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -59,9 +60,15 @@ int main(int argc, char** argv) {
             exit(1);
         }
         // Wait for child process to ends
-        if (wait(NULL) == -1) {
+        int status;
+        if (wait(&status) == -1) {
             perror("Wait error");
             exit(3);
+        }
+        if (WIFSIGNALED(status)) {
+            int signal_ended = WTERMSIG(status);
+            printf("Process %d ended with singal %d named %s\n", child_pid,
+                   signal_ended, strsignal(signal_ended));
         }
         break;
     };
