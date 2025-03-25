@@ -1,3 +1,10 @@
+// ======================================================================================
+// Program przyjmuje synał oraz metode jego obsługi (doyślna, ignorowanie,
+// własne) jako parametr a następnie ustawia jego obsługę.
+// ======================================================================================
+// Jakub Kurek 25-03-2025
+// ======================================================================================
+
 #define _POSIX_C_SOURCE 200809L
 #include <signal.h>
 #include <stdio.h>

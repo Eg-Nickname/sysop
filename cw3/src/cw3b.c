@@ -1,3 +1,13 @@
+// ======================================================================================
+// Program przyjmuje program do uruchomienia, synał oraz metode jego obsługi
+// (doyślna, ignorowanie, własne) jako parametr. Następnie tworzy nowy proces, w
+// którym wywoływany jest przekazywany program oraz przekazuje do niego sygnał
+// wraz z metoda obsługi. Następnie sprawdza czy process istnieje. Jeśli
+// istnieje to wysyła do niego sygnał przy użyciu funkcji kill.
+// ======================================================================================
+// Jakub Kurek 25-03-2025
+// ======================================================================================
+
 #define _POSIX_C_SOURCE 200809L
 #include <signal.h>
 #include <stdio.h>
@@ -65,6 +75,7 @@ int main(int argc, char** argv) {
             perror("Wait error");
             exit(3);
         }
+        // Wait for processs to end
         if (WIFSIGNALED(status)) {
             int signal_ended = WTERMSIG(status);
             printf("Process %d ended with singal %d named %s\n", child_pid,

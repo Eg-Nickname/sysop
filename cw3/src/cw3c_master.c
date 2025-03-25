@@ -1,3 +1,11 @@
+// ======================================================================================
+// Program przyjmuje dwa proramy, synał oraz metode jego obsługi (doyślna,
+// ignorowanie, własne) jako parametr. Tworzy nowy proces, któremu przekazuje
+// program, sygnał i typ obsługi sygnału.
+// ======================================================================================
+// Jakub Kurek 25-03-2025
+// ======================================================================================
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>

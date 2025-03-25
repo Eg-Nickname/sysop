@@ -1,3 +1,13 @@
+// ======================================================================================
+// Program przyjmuje program, synał oraz metode jego obsługi (doyślna,
+// ignorowanie, własne). Tworzy 4 procesy potomne, w których uruchamiany jest
+// program z parametru oraz przekazuje im sygnał oraz metode obsługi. Ustawia
+// siebie na lidera grupy a następnie wysyła sygnał do wszysstkich procesów
+// potomnych.
+// ======================================================================================
+// Jakub Kurek 25-03-2025
+// ======================================================================================
+
 #define _POSIX_C_SOURCE 200809L
 #include <signal.h>
 #include <stdio.h>
