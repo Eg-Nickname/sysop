@@ -85,6 +85,9 @@ int main(int argc, char** argv) {
                        strsignal(signal_ended));
             }
             printf("\n");
+        } else {
+            perror("Wait error");
+            exit(3);
         }
     }
     return 0;
