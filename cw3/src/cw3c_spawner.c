@@ -17,6 +17,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#define CHILD_COUNT 4
+
 int main(int argc, char** argv) {
     if (argc != 4) {
         fprintf(stderr, "Nie poprawna liczba argumentów: \n");
@@ -48,7 +50,7 @@ int main(int argc, char** argv) {
         exit(EXIT_FAILURE);
     }
     // Spawn a few child processes
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < CHILD_COUNT; i++) {
         switch ((fork())) {
         case -1:
             // Fork error code
@@ -64,31 +66,26 @@ int main(int argc, char** argv) {
             break;
         }
     }
-    // Sleep for second to ensure all spawned processes are ready to capture
-    // signal
-    sleep(1);
-    // Send signal to all children
-    if (kill(0, sig) == -1) {
-        perror("Kill error cant send signal");
-        exit(1);
-    }
+
     // Wait for them to end
     int status = 0;
     pid_t child_pid = -1;
     // Waiting for all children to die. Wait will error with -1 when no more
     // children are alive and we expect it.
-    while ((child_pid = wait(&status)) != -1) {
-        // Pid of dead child with its ending status
-        printf("    Process %d ended with status %d", child_pid,
-               WIFSIGNALED(status));
+    for (int i = 0; i < CHILD_COUNT; i++) {
+        if ((child_pid = wait(&status)) != -1) {
+            // Pid of dead child with its ending status
+            printf("Process %d ended with status %d", child_pid,
+                   WIFSIGNALED(status));
 
-        // If child died from signal print its id and name
-        if (WIFSIGNALED(status)) {
-            int signal_ended = WTERMSIG(status);
-            printf(" and singal %d named %s", signal_ended,
-                   strsignal(signal_ended));
+            // If child died from signal print its id and name
+            if (WIFSIGNALED(status)) {
+                int signal_ended = WTERMSIG(status);
+                printf(" and singal %d named %s", signal_ended,
+                       strsignal(signal_ended));
+            }
+            printf("\n");
         }
-        printf("\n");
     }
     return 0;
 }
