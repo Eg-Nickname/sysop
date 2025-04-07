@@ -54,7 +54,7 @@ $(PRODUCER_CONSUMER_EXE): $(PRODUCER_CONSUMER_OBJ) $(OBJ_SHARED_LIB)
 # Run exectuables for PRODUCER_CONSUMER consumer problem
 READ_FILE ?= ./read.txt
 WRITE_FILE ?= ./write.txt
-.PHONY: runa
+.PHONY: run
 run: $(PRODUCER_CONSUMER_EXE)
 	rm $(WRITE_FILE)
 	$(PRODUCER_CONSUMER_EXE) $(READ_FILE) $(WRITE_FILE)
