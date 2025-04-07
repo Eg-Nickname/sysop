@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/wait.h>
 #include <threads.h>
 #include <unistd.h>
 
@@ -36,7 +35,7 @@ int main(int argc, char** argv) {
         exit(1);
     }
 
-    char** writer_buff[PIPE_WRITER_BUFF_SIZE];
+    char** writer_buff[PIPE_BUFF_SIZE];
 
     // Open file to read
     int read_fd = open(read_file, O_RDONLY);
@@ -47,8 +46,8 @@ int main(int argc, char** argv) {
 
     // Read bytes from file until eof
     ssize_t file_read_bytes;
-    while ((file_read_bytes =
-                read(read_fd, writer_buff, PIPE_WRITER_BUFF_SIZE)) != 0) {
+    while ((file_read_bytes = read(read_fd, writer_buff, PIPE_BUFF_SIZE)) !=
+           0) {
         // Sleep for simulating processing data
         rsleep();
 

@@ -71,11 +71,22 @@ $(PROD_CON_MANAGER_EXE): $(PROD_CON_MANAGER_OBJ) $(OBJ_SHARED_LIB)
 READ_FILE ?= ./read.txt
 WRITE_FILE ?= ./write.txt
 PIPE_NAME ?= ./prod_con_pipe
-.PHONY: run
-run: $(PROD_CON_MANAGER_EXE) $(CONSUMER_EXE) $(PRODUCER_EXE)
-	rm $(WRITE_FILE)
+.PHONY: runa
+runa: $(PROD_CON_MANAGER_EXE) $(CONSUMER_EXE) $(PRODUCER_EXE)
+	rm -f $(WRITE_FILE)
 	$(PROD_CON_MANAGER_EXE) $(PIPE_NAME) $(PRODUCER_EXE) $(CONSUMER_EXE) $(READ_FILE) $(WRITE_FILE)
 	diff -s $(READ_FILE) $(WRITE_FILE)
+
+.PHONY: runb
+XTERM_PROD_PROG = $(PRODUCER_EXE) $(PIPE_NAME) $(READ_FILE)
+XTERM_CON_PROG = $(CONSUMER_EXE) $(PIPE_NAME) $(WRITE_FILE)
+runb: $(PRODUCER_EXE) $(CONSUMER_EXE)
+	mkfifo -m 644 $(PIPE_NAME)
+	xterm -hold -title PRODUCER -e "$(XTERM_PROD_PROG)" &
+	xterm -hold -title CONSUMER -e "$(XTERM_CON_PROG)" 
+	unlink $(PIPE_NAME)
+	diff -s $(READ_FILE) $(WRITE_FILE)
+
 .PHONY: clean tar
 # File cleanup before archiving and compressing
 clean:                                                     

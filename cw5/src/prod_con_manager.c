@@ -1,7 +1,6 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -72,8 +71,13 @@ int main(int argc, char** argv) {
         // Parent process code
         break;
     };
-    // TODO WAIT FOR DEATH OF ALL CHILDREN
-
+    // WAIT FOR DEATH OF ALL CHILDREN
+    for (int i = 0; i < 2; i++) {
+        if (wait(NULL) == -1) {
+            perror("Wait error");
+            exit(1);
+        }
+    }
     return 0;
 }
 
