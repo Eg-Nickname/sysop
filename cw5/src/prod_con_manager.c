@@ -1,3 +1,13 @@
+// ======================================================================================
+// Program przyjmuje 5 argumentów, nazwe potoku, program produenta, program
+// konsumenta, plik do oczytu danych, plik do zapisu danych. Progrma ten tworzy
+// nazwany potok oraz 2 procesy potomne, którym przekazuje potok oraz
+// odpowiednio plik zapisu/odczytu. Po zakończeniu procesów potomnych usuwa
+// nazwany potok przy uzyciu funkcji atexit().
+// ======================================================================================
+// Jakub Kurek 15-04-2025
+// ======================================================================================
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>

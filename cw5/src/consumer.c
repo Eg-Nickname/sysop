@@ -1,3 +1,10 @@
+// ======================================================================================
+// Program przyjmuje 2 argmunety, nazwę potoku oraz nazwę pliiku. Odczytuje dane
+// z potoku, wypisuje je na standardowe wyjśćie oraz zapisuje w podanym pliku.
+// ======================================================================================
+// Jakub Kurek 15-04-2025
+// ======================================================================================
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
