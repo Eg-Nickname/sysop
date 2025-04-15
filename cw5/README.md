@@ -1,13 +1,12 @@
 ## Autor: Jakub Kurek
 
-### Data: DD-MM-RRRR
+### Data: 15-04-2025
 
 # Co zawiera
 
 Folder zawiera pliki:
 - README - informacje o programach i użyciu
 - Makefile - kompilacja, uruchamianie, archiwizacja programów
-- odp.md - Odpowiedź na pytanie ile procesów powstanie po n krotnym wywołaniu funkcji fork() wraz execl().
 - src/ - katalog zawierający pliki źródłowe poszczególnych programów oraz biblioteki współdzielonej funkcji:
 
 Katalog src:
@@ -25,7 +24,6 @@ Katalog src:
 make runa # Uruchamia program, który tworzy potok i procesy potomne
 make runb # Tworzy potok z poziomu terminala. Tworzy 2 nowe terminale, w których uruchhamia producenta i konsumenta. Po zakończeniu usuwa potok.
 ```
-
 
 # Po zakończeniu
 
