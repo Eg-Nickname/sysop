@@ -1,3 +1,16 @@
+// ======================================================================================
+// Program przygotowujący środowisko do realizacji problmu wzajemnego
+// wykluczenia procesów. Tworzy on plik oraz inicjalizuje jego wartoś, który
+// jest zasobem współdzielonym. Następnie tworzy semafor nazwany oraz ustawia
+// funkcje usuwająca go w przypadku wcześniejszego zakończenia programu lub
+// otrzymania sygnału SIGINT. Tworzy procesy potomne, które symulują
+// przetwarzanie danych z zasobu współdzielonego (pliku).Po zakończeniu procesów
+// potomnych program weryfikuje poprawność działania wykluczania, poprzes
+// weryfikacje zawartości pliku z oczekiwaną wartością.
+// ======================================================================================
+// Jakub Kurek 29-04-2025
+// ======================================================================================
+
 #include "semaphore.h"
 #include <fcntl.h>
 #include <signal.h>

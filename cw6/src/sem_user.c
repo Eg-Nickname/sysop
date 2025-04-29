@@ -1,3 +1,10 @@
+// ======================================================================================
+// Program symuluje przetwarzanie danych przy użyciu zasobu współdzielonego,
+// którym jest plik przy użyciu mechanizmów wykluczającyh (semaforów).
+// ======================================================================================
+// Jakub Kurek 29-04-2025
+// ======================================================================================
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>

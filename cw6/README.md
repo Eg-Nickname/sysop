@@ -1,6 +1,6 @@
 ## Autor: Jakub Kurek
 
-### Data: DD-MM-RRRR
+### Data: 29-04-2025
 
 # Co zawiera
 
@@ -10,15 +10,24 @@ Folder zawiera pliki:
 - src/ - katalog zawierający pliki źródłowe poszczególnych programów oraz biblioteki współdzielonej funkcji:
 
 Katalog src:
-- 
+- sem_controler.c
+- sem_user.c
+- semaphore.c
+- semaphore.h - plik nagłówkowy zawierający deklaracje funkcji biblioteki semaphore
 
 # Do czego służy
 
+Program realizują problem wzajemnego wykluczenia procesów przy użyciu semaforów.
 
+- sem_controler.x - program przygotowujący środowisko do realizacji problemu wyklczenia
+- sem_user.x - proram używający smafora do realizacji problemu wykluczenia
+- semaphore.o - biblioteka abstrachująca działanie i używanie semaforów
 
 # Jak uruchomić program
 
-
+```bash
+make run # Uruchamia programy realizujące problem wykluczania
+```
 
 # Po zakończeniu
 
