@@ -3,7 +3,7 @@
 #==============================================================================
 SEM_NAME ?= BlockSem
 CHILD_PROC_COUNT ?= 4
-CRIT_SECTION_COUNT ?= 
+CRIT_SECTION_COUNT ?= 4
 COUNTER_FILE ?= num.txt
 
 .SUFFIXES: .c .o .x .h

@@ -113,8 +113,8 @@ int main(int argc, char** argv) {
             exit(1);
         case 0:
             // Child process code
-            execl(child_proc_prog, child_proc_prog, counter_file_name,
-                  child_crit_sections_count, sem_name, NULL);
+            execlp(child_proc_prog, child_proc_prog, counter_file_name,
+                   child_crit_sections_count, sem_name, NULL);
             perror("Execv error");
             _exit(2);
             break;

@@ -34,7 +34,7 @@ sem_t* create_named_sem(const char* name, int init_val) {
 }
 
 sem_t* open_named_sem(const char* name) {
-    sem_t* sem_ptr = sem_open(name, O_CREAT);
+    sem_t* sem_ptr = sem_open(name, 0);
     if (sem_ptr == SEM_FAILED) {
         perror("named sem opens  error");
         return NULL;
