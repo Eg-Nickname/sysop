@@ -16,14 +16,14 @@
 #include "shared_mem.h"
 
 int create_shm(const char* name) {
-    int shm_ret = shm_open(name, O_CREAT, 0666);
+    int shm_ret = shm_open(name, O_CREAT | O_RDWR, 0666);
     if (shm_ret == -1) {
         return 0;
     }
     return shm_ret;
 }
 
-int init_shm(int shm_fd, off_t size) { return ftruncate(shm_fd, size) + 1; }
+int init_shm(int shm_fd, off_t size) { return ftruncate(shm_fd, 20) + 1; }
 int open_shm(const char* name) {
     int shm_ret = shm_open(name, O_RDWR, 0666);
     if (shm_ret == -1) {

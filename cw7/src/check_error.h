@@ -9,6 +9,7 @@ przekazywanego argumentu (#Arg) i konczy program.
     if (!(Arg)) {                                                              \
         fprintf(stderr, "[ERROR] %s:%d (%s) -> CheckError argument: %s\n",     \
                 __FILE__, __LINE__, __func__, #Arg);                           \
+        perror("ugabuga");                                                     \
         exit(EXIT_FAILURE);                                                    \
     }
 /*
