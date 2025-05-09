@@ -1,9 +1,11 @@
 #==============================================================================
 # make all, run clean, tar, help
 #==============================================================================
-SEM_NAME ?= BlockSemShmSem
+PRODUCER_SESEM_NAME ?= BlockSemShmSem
+M_NAME ?= BlockProdSemShmSem
+CONSUMER_SEM_NAME ?= BlockConSemShmSem
 SHM_NAME ?= SharedSemShmShm
-READ_FiLE ?= read.txt
+READ_FILE ?= read.txt
 WRITE_FILE ?= wrtie.txt
 
 .SUFFIXES: .c .o .x .h
@@ -122,7 +124,8 @@ $(PRODUCER_STATIC_EXE): $(PRODUCER_OBJ) $(STAT_LIB)
 # Run static library exes
 .PHONY: runs
 runs: $(SEM_MEM_CONTROLER_STATIC_EXE) $(PRODUCER_STATIC_EXE) $(CONSUMER_STATIC_EXE)
-	$(SEM_MEM_CONTROLER_STATIC_EXE) $(SHM_NAME) $(SEM_NAME) $(PRODUCER_STATIC_EXE) $(CONSUMER_STATIC_EXE) $(READ_FiLE) $(WRITE_FILE)
+	$(SEM_MEM_CONTROLER_STATIC_EXE) $(SHM_NAME) $(PRODUCER_SESEM_NAME) $(CONSUMER_SEM_NAME) $(PRODUCER_STATIC_EXE) $(CONSUMER_STATIC_EXE) $(READ_FILE) $(WRITE_FILE)
+	diff -s $(READ_FILE) $(WRITE_FILE)
 
 # Run dynamic library exes
 .PHONY: rund
