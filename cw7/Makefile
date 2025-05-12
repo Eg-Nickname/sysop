@@ -1,7 +1,7 @@
 #==============================================================================
 # make all, run clean, tar, help
 #==============================================================================
-PRODUCER_SESEM_NAME ?= BlockSemShmSem
+PRODUCER_SEM_NAME ?= BlockSemShmSem
 M_NAME ?= BlockProdSemShmSem
 CONSUMER_SEM_NAME ?= BlockConSemShmSem
 SHM_NAME ?= SharedSemShmShm
@@ -35,14 +35,6 @@ STAT_LIB = lib$(COMBINED_LIB_NAME).a
 # Shared Lib
 SHARE_LIB = lib$(COMBINED_LIB_NAME).so
 
-ifeq ($(SYSNAME), Linux)
-    SHARE_LIB = lib$(COMBINED_LIB_NAME).so
-endif
-# macOS - nazwa jadra to Darwin
-ifeq ($(SYSNAME), Darwin)
-    SHARE_LIB = lib$(COMBINED_LIB_NAME).dylib
-endif
-
 # Executables objects path
 SEM_MEM_CONTROLER_OBJ= $(OBJ_DIR)/$(SEM_MEM_CONTROLER).o
 PRODUCER_OBJ= $(OBJ_DIR)/$(PRODUCER).o
@@ -59,16 +51,18 @@ SEM_MEM_CONTROLER_STATIC_EXE = $(EXE_DIR)/$(SEM_MEM_CONTROLER)_static.x
 PRODUCER_STATIC_EXE = $(EXE_DIR)/$(PRODUCER)_static.x
 CONSUMER_STATIC_EXE = $(EXE_DIR)/$(CONSUMER)_static.x
 
-SEM_MEM_CONTROLER_DYNAMIC_EXE = $(EXE_DIR)/$(SEM_MEM_CONTOLER)_dynamic.x
+SEM_MEM_CONTROLER_DYNAMIC_EXE = $(EXE_DIR)/$(SEM_MEM_CONTROLER)_dynamic.x
 PRODUCER_DYNAMIC_EXE = $(EXE_DIR)/$(PRODUCER)_dynamic.x
 CONSUMER_DYNAMIC_EXE = $(EXE_DIR)/$(CONSUMER)_dynamic.x
 
 # Compilator flags
-CFLAGS = -Wall -std=c99 -pedantic -O -fPIC
+CFLAGS = -Wall -std=c99 -pedantic -fPIC -fvisibility=default
 # Linker flags
-LFLAGS = -Wall -std=c99 -pedantic -pthread -O -lrt
+LFLAGS = -Wall -std=c99 -pedantic -pthread -lrt -fPIC -fvisibility=default
 # Flags for ar
 ARFLAGS = rsv
+# Linker lib
+LDLIBS = -lm
 
 # Compiler and linker
 CO = gcc
@@ -96,14 +90,7 @@ $(STAT_LIB): $(LIBS_OBJ)
 
 # Shared library creation
 $(SHARE_LIB): $(LIBS_OBJ)
-# Linux - opcja linkera: -shared
-ifeq ($(SYSNAME), Linux)
-	$(LD) -shared -o $@ $(LFLAGS) $(LIBS_OBJS)
-endif
-# macOS - opcje linkera: -dynamiclib,  -install_name @rpath/$(LIB_DIR)/$@
-ifeq ($(SYSNAME), Darwin)
-	$(LD) -dynamiclib -o $@ $(LFLAGS) $(LIBS_OBJS) -install_name @rpath/$(LIB_DIR)/$@
-endif
+	$(LD) -shared $? -o $@ $(LFLAGS) 
 	mkdir -p $(LIB_DIR)
 	mv $(SHARE_LIB) $(LIB_DIR)
 
@@ -121,16 +108,35 @@ $(PRODUCER_STATIC_EXE): $(PRODUCER_OBJ) $(STAT_LIB)
 	rm -f $(LIB_DIR)/$(SHARE_LIB)
 	$(LD) -o $@ $(LFLAGS) $(PRODUCER_OBJ) -L$(LIB_DIR) -l$(COMBINED_LIB_NAME) $(LDLIBS)
 
+# Dynamic library executables
+$(SEM_MEM_CONTROLER_DYNAMIC_EXE): $(SEM_MEM_CONTROLER_OBJ) $(SHARE_LIB)
+	$(LD) -o $@ $(LFLAGS) $(SEM_MEM_CONTROLER_OBJ) -L$(LIB_DIR) -l$(COMBINED_LIB_NAME) $(LDLIBS) -Wl,-rpath,$(LIB_DIR)
+
+$(CONSUMER_DYNAMIC_EXE): $(CONSUMER_OBJ) $(SHARE_LIB)
+	$(LD) -o $@ $(LFLAGS) $(CONSUMER_OBJ) -L$(LIB_DIR) -l$(COMBINED_LIB_NAME) $(LDLIBS) -Wl,-rpath $(LIB_DIR)
+
+$(PRODUCER_DYNAMIC_EXE): $(PRODUCER_OBJ) $(SHARE_LIB)
+	$(LD) -o $@ $(LFLAGS) $(PRODUCER_OBJ) -L$(LIB_DIR) -l$(COMBINED_LIB_NAME) $(LDLIBS) -Wl,-rpath $(LIB_DIR)
+
+
+
+
+
+
+
 # Run static library exes
 .PHONY: runs
 runs: $(SEM_MEM_CONTROLER_STATIC_EXE) $(PRODUCER_STATIC_EXE) $(CONSUMER_STATIC_EXE)
-	$(SEM_MEM_CONTROLER_STATIC_EXE) $(SHM_NAME) $(PRODUCER_SESEM_NAME) $(CONSUMER_SEM_NAME) $(PRODUCER_STATIC_EXE) $(CONSUMER_STATIC_EXE) $(READ_FILE) $(WRITE_FILE)
+	$(SEM_MEM_CONTROLER_STATIC_EXE) $(SHM_NAME) $(PRODUCER_SEM_NAME) $(CONSUMER_SEM_NAME) $(PRODUCER_STATIC_EXE) $(CONSUMER_STATIC_EXE) $(READ_FILE) $(WRITE_FILE)
 	diff -s $(READ_FILE) $(WRITE_FILE)
 
 # Run dynamic library exes
 .PHONY: rund
 rund: $(SEM_MEM_CONTROLER_DYNAMIC_EXE) $(PRODUCER_DYNAMIC_EXE) $(CONSUMER_DYNAMIC_EXE)
-	$(SEM_MEM_CONTROLER_DYNAMIC_EXE)
+	export LD_LIBRARY_PATH=${LIB_DIR}:${LD_LIBRARY_PATH}; \
+	echo LD_LIBRARY_PATH; \
+	$(SEM_MEM_CONTROLER_DYNAMIC_EXE) $(SHM_NAME) $(PRODUCER_SEM_NAME) $(CONSUMER_SEM_NAME) $(PRODUCER_DYNAMIC_EXE) $(CONSUMER_DYNAMIC_EXE) $(READ_FILE) $(WRITE_FILE)
+	diff -s $(READ_FILE) $(WRITE_FILE)
 
 
 .PHONY: clean tar
