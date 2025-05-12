@@ -1,3 +1,16 @@
+// ======================================================================================
+// Program przyjmuje 7 argmunetów, nazwę pamiędi dzielonej, nazwe semafora
+// producenta, nazwe semafora consumenta, program producenta, program
+// konsumentan nazwe pliku do odczytu i nazwe pliku do zapisu. Tworzy segment
+// pamięci dzielonej na bufor cykliczny i go inicjalizuje. Tworzy semafory
+// producenta i konsumenta oraz ustawia obsługe sygnału przerwania i
+// wcześniejszego zakonczenia by usunąć utworzone zasoby. Następnie uruchamia
+// programy producenta i konsumenta w proesach potomnych z odpowiednimi
+// argumentami.
+// ======================================================================================
+// Jakub Kurek 13-05-2025
+// ======================================================================================
+
 #include <fcntl.h>
 #include <signal.h>
 #include <stdio.h>
@@ -19,12 +32,14 @@ char* prod_sem_name = NULL;
 // Consumer semaphore name
 char* con_sem_name = NULL;
 
+// atexit function
 void exit_fn(void) {
     CheckError(destroy_named_sem(prod_sem_name));
     CheckError(destroy_named_sem(con_sem_name));
     CheckError(destroy_shm(shm_name));
 }
 
+// Handle iterrupt signal function
 void sigint_handler(int _) { exit(EXIT_SUCCESS); }
 
 int main(int argc, char** argv) {

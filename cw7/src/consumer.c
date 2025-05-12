@@ -1,3 +1,12 @@
+// ======================================================================================
+// Program przyjmuje 4 argmunety, nazwę pamiędi dzielonej, nazwe semafora
+// producenta, nazwe semafora consumenta  oraz nazwę pliiku. Odczytuje dane z
+// bufora cyklicznego  z pamięci dzielonej, wypisuje je na standardowe wyjśćie
+// oraz zapisuje w podanym pliku.
+// ======================================================================================
+// Jakub Kurek 13-05-2025
+// ======================================================================================
+
 #define _POSIX_C_SOURCE 200809L
 
 #include <fcntl.h>

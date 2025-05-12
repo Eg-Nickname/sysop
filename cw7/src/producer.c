@@ -1,3 +1,12 @@
+// ======================================================================================
+// Program przyjmuje 4 argmunety, nazwę pamiędi dzielonej, nazwe semafora
+// producenta, nazwe semafora consumenta  oraz nazwę pliiku. Odczytuje dane z
+// pliku, wypisuje je na standardowe wyjśćie oraz zapisuje w buforze cyklicznym
+// z pamięci dzielonej
+// ======================================================================================
+// Jakub Kurek 13-05-2025
+// ======================================================================================
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
