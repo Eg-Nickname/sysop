@@ -133,8 +133,6 @@ runs: $(SEM_MEM_CONTROLER_STATIC_EXE) $(PRODUCER_STATIC_EXE) $(CONSUMER_STATIC_E
 # Run dynamic library exes
 .PHONY: rund
 rund: $(SEM_MEM_CONTROLER_DYNAMIC_EXE) $(PRODUCER_DYNAMIC_EXE) $(CONSUMER_DYNAMIC_EXE)
-	export LD_LIBRARY_PATH=${LIB_DIR}:${LD_LIBRARY_PATH}; \
-	echo LD_LIBRARY_PATH; \
 	$(SEM_MEM_CONTROLER_DYNAMIC_EXE) $(SHM_NAME) $(PRODUCER_SEM_NAME) $(CONSUMER_SEM_NAME) $(PRODUCER_DYNAMIC_EXE) $(CONSUMER_DYNAMIC_EXE) $(READ_FILE) $(WRITE_FILE)
 	diff -s $(READ_FILE) $(WRITE_FILE)
 
@@ -151,7 +149,8 @@ tar: clean
 help:
 	@echo "Oto cele dla make zdefiniowane w tym Makefile:"
 	@echo "   all"
-	@echo "   run"
+	@echo "   runs"
+	@echo "		rund"
 	@echo "   clean"
 	@echo "   tar"
 	@echo "   help"
