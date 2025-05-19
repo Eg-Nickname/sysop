@@ -30,8 +30,8 @@ int queue_get_attr(int qd, queue_attr* attr_ptr);
 // przypadku suckecu.
 int queue_send(int qd, char* msg_ptr, size_t msg_size, unsigned int priotrity);
 
-// Funkcja odbiera wiadomośc z kolejki. Zwraca 0 w przypadku błędu lub 1 w
-// przypadku suckecu
-int queue_recive(int qd, char* msg_ptr, size_t msg_size);
+// Funkcja odbiera wiadomośc z kolejki. Zwraca 0 w przypadku błędu lub ilość
+// odczytanych bajtów w przypadku sukcesu
+int queue_receive(int qd, char* msg_ptr, size_t msg_size);
 
 #endif

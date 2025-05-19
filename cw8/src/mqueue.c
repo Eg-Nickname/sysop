@@ -10,7 +10,7 @@ int queue_create(const char* name, long queue_max_msg, long queue_msg_size) {
                            .mq_msgsize = queue_msg_size,
                            .mq_curmsgs = 0};
 
-    int qd = mq_open(name, O_CREAT | O_EXCL, 0666, attr);
+    int qd = mq_open(name, O_CREAT | O_EXCL, 0666, &attr);
     if (qd == -1) {
         perror("mq creation error");
         return 0;
@@ -63,11 +63,11 @@ int queue_send(int qd, char* msg_ptr, size_t msg_size, unsigned int priotrity) {
     return 1;
 }
 
-int queue_recive(int qd, char* msg_ptr, size_t msg_size) {
+int queue_receive(int qd, char* msg_ptr, size_t msg_size) {
     int recive_ret = mq_receive(qd, msg_ptr, msg_size, NULL);
     if (recive_ret == -1) {
         perror("queue msg recive error");
         return 0;
     }
-    return 1;
+    return recive_ret;
 }

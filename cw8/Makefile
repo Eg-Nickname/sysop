@@ -1,10 +1,6 @@
 #==============================================================================
-# make all, run clean, tar, help
+# make all, runs, runc, clean, tar, help
 #==============================================================================
-SEM_NAME ?= BlockSem
-CHILD_PROC_COUNT ?= 4
-CRIT_SECTION_COUNT ?= 4
-COUNTER_FILE ?= num.txt
 
 .SUFFIXES: .c .o .x .h
 DIR = $(notdir $(CURDIR))
@@ -17,22 +13,22 @@ EXE_DIR = $(TARGET_DIR)/exe
 # Source code directory
 SRC_DIR = ./src
 # Names for object and exe files for programs
-SEM_CONTROLER = sem_controler
-SEM_USER = sem_user
-SHARED_LIB = semaphore
+SERVER = server
+CLIENT = client
+SHARED_LIB = mqueue
 # Executables objects path
-SEM_CONTROLER_OBJ= $(OBJ_DIR)/$(SEM_CONTROLER).o
-SEM_USER_OBJ= $(OBJ_DIR)/$(SEM_USER).o
+SERVER_OBJ= $(OBJ_DIR)/$(SERVER).o
+CLIENT_OBJ= $(OBJ_DIR)/$(CLIENT).o
 
 # Shared behaviour object file
 OBJ_SHARED_LIB = $(OBJ_DIR)/$(SHARED_LIB).o
 
 # Executables path
-SEM_USER_EXE = $(EXE_DIR)/$(SEM_USER).x
-SEM_CONTROLER_EXE = $(EXE_DIR)/$(SEM_CONTROLER).x
+CLIENT_EXE = $(EXE_DIR)/$(CLIENT).x
+SERVER_EXE = $(EXE_DIR)/$(SERVER).x
 
 
-EXES = $(SEM_CONTROLER) $(SEM_USER_EXE)
+EXES = $(SERVER_EXE) $(CLIENT_EXE)
 
 # Compilator flags
 CFLAGS = -Wall -std=c99 -pedantic -O -fPIC
@@ -57,15 +53,20 @@ target_dir:
 .PHONY: all
 all: target_dir $(EXES)
 
-$(SEM_USER_EXE): $(SEM_USER_OBJ) $(OBJ_SHARED_LIB) 
+$(CLIENT_EXE): $(CLIENT_OBJ) $(OBJ_SHARED_LIB) 
 	$(LD) -o $@ $(LFLAGS) $^
 
-$(SEM_CONTROLER_EXE): $(SEM_CONTROLER_OBJ) $(OBJ_SHARED_LIB) 
+$(SERVER_EXE): $(SERVER_OBJ) $(OBJ_SHARED_LIB) 
 	$(LD) -o $@ $(LFLAGS) $^
 
-.PHONY: run
-run: $(SEM_CONTROLER_EXE) $(SEM_USER_EXE)
-	$(SEM_CONTROLER_EXE) $(COUNTER_FILE) $(SEM_NAME) $(SEM_USER_EXE) $(CHILD_PROC_COUNT) $(CRIT_SECTION_COUNT)
+.PHONY: runs
+runs: $(SERVER_EXE)
+	$(SERVER_EXE)
+
+
+.PHONY: runc
+runc: $(CLIENT_EXE)
+	$(CLIENT_EXE)
 
 .PHONY: clean tar
 # File cleanup before archiving and compressing
@@ -79,7 +80,8 @@ tar: clean
 help:
 	@echo "Oto cele dla make zdefiniowane w tym Makefile:"
 	@echo "   all"
-	@echo "   run"
+	@echo "   runs"
+	@echo "   rund"
 	@echo "   clean"
 	@echo "   tar"
 	@echo "   help"
