@@ -121,6 +121,7 @@ void *thread_fn(void *arg) {
         int mutex_lock_ret = 0;
         if ((mutex_lock_ret = pthread_mutex_lock(&thread_mutex) != 0)) {
             fprintf(stderr, "Mutex lock error %s \n", strerror(mutex_lock_ret));
+            thrd_exit(1);
         }
         // Print that thread is in the crit section
         printf("\033[%d;%dH\033[2K", thread_print_line, 40);
@@ -142,6 +143,7 @@ void *thread_fn(void *arg) {
         if ((mutex_unlock_ret = pthread_mutex_unlock(&thread_mutex) != 0)) {
             fprintf(stderr, "Mutex unlock error %s \n",
                     strerror(mutex_lock_ret));
+            thrd_exit(1);
         }
     }
     // Print thread finished
