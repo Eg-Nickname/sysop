@@ -1,3 +1,10 @@
+// ======================================================================================
+// Program ralizuje probelm wzajemnego wykluczania wątków, przy uzyciu mutexów.
+// Przyjmuje jao argumenty liczbę wątków oraz liczbe ich sekcji krytycznych.
+// ======================================================================================
+// Jakub Kurek 20-05-2025
+// ======================================================================================
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
