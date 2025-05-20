@@ -68,6 +68,13 @@ runs: $(SERVER_EXE)
 runc: $(CLIENT_EXE)
 	$(CLIENT_EXE)
 
+.PHONY: runall
+runall: $(SERVER_EXE) $(CLIENT_EXE)
+	xterm -hold -title SERWER -bg red -fg black -e $(SERVER_EXE) &
+	xterm -hold -title KLIENT1 -bg green -fg black -e $(CLIENT_EXE) &
+	xterm -hold -title KLIENT2 -bg green -fg black -e $(CLIENT_EXE) &
+
+
 .PHONY: clean tar
 # File cleanup before archiving and compressing
 clean:                                                     
@@ -82,6 +89,7 @@ help:
 	@echo "   all"
 	@echo "   runs"
 	@echo "   rund"
+	@echo "	  runall"
 	@echo "   clean"
 	@echo "   tar"
 	@echo "   help"

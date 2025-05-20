@@ -1,3 +1,14 @@
+// ======================================================================================
+// Program symuluje serwer otrzymujący dane od clientów w celu wykonania pewnych
+// obliczeń. Tworzy on własną kolejkę komunikatów przy pomocy, której będzie
+// otrzymywać dane. Oczekuje na dane do momentu otrzymania sygnału SIGINT. W
+// nieskońcoznej pętli odczytuje wiadomośći z kolejki. Dla kazdej wiadomości
+// wyciąga pid klienta, liczbe, operator, liczbę. Otwiera kolejkę wiadomości dla
+// klienta, do której wysyła obliczony wynik.
+// ======================================================================================
+// Jakub Kurek 20-05-2025
+// ======================================================================================
+
 #include <fcntl.h>
 #include <mqueue.h>
 #include <signal.h>
@@ -21,17 +32,17 @@ int msleep(unsigned long msec);
 void rsleep(void) {
     unsigned long msec =
         rand() % (RSLEEP_MAX_TIME - RSLEEP_MIN_TIME) + RSLEEP_MIN_TIME;
-    // printf("Proc pid: %d sleeping for %lu ms", getpid(), msec);
     msleep(msec);
 }
+
 // atexit function
 void exit_fn(void) { CheckError(queue_destroy(SERVER_QUEUE_NAME)); }
 // custom sigint handler
 void sigint_handler(int _) { exit(EXIT_SUCCESS); }
-
+// function performing calculations for input data
 long double calculate(long double num1, long double num2, char operator);
 
-int main(int argc, char** argv) {
+int main(void) {
     // Create server queue to recive calculations
     int qd;
     CheckError(qd = queue_create(SERVER_QUEUE_NAME, SERVER_QUEUE_MSG_COUNT,
@@ -53,21 +64,25 @@ int main(int argc, char** argv) {
         perror("atexit error");
         exit(EXIT_FAILURE);
     }
+
     // Set SIGINT handling
     if (signal(SIGINT, sigint_handler) == SIG_ERR) {
         perror("Cant set custom handling for SIGINT");
         exit(EXIT_FAILURE);
     }
-    // Seed rand function for sleeping using time and pid
+
+    // Seed rand function for sleeping using time
     srand(time(NULL));
 
-    // Recive msg until sigint
+    // Create reusable message buffers
     char recive_msg_buf[MAX_SERVER_MSG_SIZE];
     char send_msg_buf[MAX_CLIENT_MSG_SIZE];
     char client_queue_name[MAX_CLIENT_NAME_LEN];
+    // Recive msg until sigint
     while (1) {
         // Get msg and process it
         printf("\n\n[SERVER] Waiting for msg \n");
+
         // Read msg from queue
         int msg_bytes = 0;
         CheckError(msg_bytes =
@@ -75,6 +90,7 @@ int main(int argc, char** argv) {
         if (msg_bytes < MAX_SERVER_MSG_SIZE) {
             recive_msg_buf[msg_bytes] = '\0';
         }
+
         // Debug print recived msg
         printf("[RECIVED MSG] %s \n", recive_msg_buf);
 
@@ -88,6 +104,7 @@ int main(int argc, char** argv) {
             printf("Failed to parse out msg from client \n");
         }
 
+        // Print parsed message parts
         printf(
             "[SERVER] Parsed out pid: %d, with nums %Lf, %Lf, operator %c \n",
             client_pid, num1, num2, operator);
@@ -102,8 +119,8 @@ int main(int argc, char** argv) {
                    client_pid, client_queue_name);
             continue;
         }
-
-        printf("[SERVER] Client queue name |%s| \n", client_queue_name);
+        // Log client queue name
+        printf("[SERVER] Client queue name | %s | \n", client_queue_name);
 
         // Open cliend queue
         int client_qd;

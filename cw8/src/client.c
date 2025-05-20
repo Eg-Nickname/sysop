@@ -1,3 +1,16 @@
+// ======================================================================================
+// Program symuluje klienta, który wysyła dane do "serwera" w celu
+// przetworzenia. Tworzy kolejkę komunikatów z nazwą jako swoje pid. Wczytuje on
+// dane  pobrane od użytkownika z klawiatury, w formie prostych działan
+// matematycznych składających się z "liczba" "operator" "liczba", gdzie
+// operator to +, -, *, /. Nastpenie je wysyła wiadomość do serwera w postaci
+// "pid liczba operator liczba". Po otrzymaniu wyniku wypisuje je na standardowe
+// wyjście. Przyjomwanie danych trwa do momenu otrzymania od użytkownika EOF
+// (Ctrl+D) jako wejście.
+// ======================================================================================
+// Jakub Kurek 20-05-2025
+// ======================================================================================
+
 #include <fcntl.h>
 #include <mqueue.h>
 #include <signal.h>
@@ -25,7 +38,6 @@ int msleep(unsigned long msec);
 void rsleep(void) {
     unsigned long msec =
         rand() % (RSLEEP_MAX_TIME - RSLEEP_MIN_TIME) + RSLEEP_MIN_TIME;
-    // printf("Proc pid: %d sleeping for %lu ms", getpid(), msec);
     msleep(msec);
 }
 // atexit function
@@ -114,6 +126,8 @@ int main(int arg, char** argv) {
                recive_msg_buf);
         printf("[CLIENT] Input equation for calculations: ");
     }
+    // Inform that client has ended reading input
+    printf("[CLIENT] Cliend has finished taking input! \n");
     // Close queues
     CheckError(queue_close(server_qd));
     CheckError(queue_close(client_qd));
