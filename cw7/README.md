@@ -1,6 +1,6 @@
 ## Autor: Jakub Kurek
 
-### Data: DD-MM-RRRR
+### Data: 13-05-2025
 
 # Co zawiera
 
