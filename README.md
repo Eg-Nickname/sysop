@@ -24,7 +24,7 @@ Codebase is documented in English but the README's are written in Polish. Each t
 
 ```
 
-### [Task 1 (cw2)] Process Management & Hierarchy
+### [Task 1 (cw1)] Process Management & Hierarchy
 
 - **Focus:** Understanding PID, PPID, UID, GID, and the `fork()` system call.
 - **Programs:**
