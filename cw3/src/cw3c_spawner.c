@@ -75,8 +75,7 @@ int main(int argc, char** argv) {
     for (int i = 0; i < CHILD_COUNT; i++) {
         if ((child_pid = wait(&status)) != -1) {
             // Pid of dead child with its ending status
-            printf("Process %d ended with status %d", child_pid,
-                   WIFSIGNALED(status));
+            printf("Process %d ended with status %d", child_pid, status);
 
             // If child died from signal print its id and name
             if (WIFSIGNALED(status)) {

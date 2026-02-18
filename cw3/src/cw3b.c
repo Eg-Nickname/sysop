@@ -78,8 +78,8 @@ int main(int argc, char** argv) {
         // Wait for processs to end
         if (WIFSIGNALED(status)) {
             int signal_ended = WTERMSIG(status);
-            printf("Process %d ended with singal %d named %s\n", child_pid,
-                   signal_ended, strsignal(signal_ended));
+            printf("Process %d ended with singal %d named %s status %d \n",
+                   child_pid, signal_ended, strsignal(signal_ended), status);
         }
         break;
     };

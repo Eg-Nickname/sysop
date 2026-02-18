@@ -68,8 +68,8 @@ $(EXEC_SPAWNER): $(OBJC_SPAWNER) $(OBJ_SHARED_LIB)
 	$(LD) -o $@ $(LFLAGS) $^
 
 # Run exectuable for program A
-SIG ?= 2
-SIG_HANDLING ?= 2
+SIG ?= 3
+SIG_HANDLING ?= 0
 .PHONY: runa
 runa: $(EXEA)
 	$(EXEA) $(SIG) $(SIG_HANDLING)

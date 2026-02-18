@@ -19,8 +19,8 @@ int THREAD_COUNT = 0;
 int GLOBAL_COUNTER = 0;
 pthread_mutex_t thread_mutex;
 
-int *choosing = NULL;
-int *threads_numbers = NULL;
+volatile int *choosing = NULL;
+volatile int *threads_numbers = NULL;
 
 void *thread_fn(void *);
 
